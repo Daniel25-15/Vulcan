@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            overflow: hidden;
+        }
+        .main-container {
+            background-color: rgb(19, 18, 18);
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 25px;
+        }
+        .input-container {
+            border-radius: 20px;
+            height: 50px;
+            width: 90%;
+            align-self: center;
+            /* bottom: 25px; */
+            background-color: #303131;
+            padding: 0px 25px;
+            align-items: center;
+            text-align: center;
+            line-height: 50px;
+            display: flex;
+            /* padding-left: 25px;
+            padding-right: 25px; */
+        }
+        .input-area {
+            background-color: #333536;
+            width: 80%;
+            height: 75%;
+            border-radius: 10px;
+            text-align: left;
+            padding-left: 5px;
+            color: white;
+        }
+        #send-message-button {
+            height: 35px;
+            width: 35px;
+            border-radius: 10px;
+            padding: 0px;
+            /* display: flex; */
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            /* margin-top: 0; */
+            /* background-color: #07a5e4db; */
+            background: linear-gradient(
+                45deg,
+                #075acf,
+                #7a00ff,
+                #ba07c7,
+                #8000ff,
+                #7a00ff,
+                #075acf,
+                #7a00ff,
+                #ba07c7,
+                #8000ff,
+                #7a00ff,
+                #075acf
+            );
+            background-size: 400% 400%;
+            /* filter: blur(40px); */
+            animation: colorFade 24s ease infinite;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        @keyframes colorFade {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        #send-message-button img {
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+        }
+        #send-message-button:hover {
+            transform: scale(1.1) rotate(90deg);
+            /* background-color: #6d0d0d4f; */
+        }
+        .chat-container {
+            margin: 25px;
+            width: 95%;
+            height: 100%;
+            background-color: rgb(19, 18, 18);
+            border-color: black;
+            border: 5px;
+            border-radius: 10px;
+            padding: 10px;
+            overflow-y: auto;
+            padding-bottom: 80px;
+        }
+        .model-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+        #model-dropdown-button {
+            padding: 10px 15px;
+            background-color: #075acf;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-right: 10px;
+            width: fit-content;
+            height: 40px;
+            font-size: 8pt;
+        }
+        .model-dropdown-menu {
+            position: absolute;
+            bottom: 100%;
+            /* height: 25px; */
+            justify-content: center;
+            left: 0;
+            /* margin-bottom: 5px; */
+            /* margin: 10px; */
+            gap: 10px;
+            /* background-color: transparent; */
+            background-color: #2b2929;
+            border-radius: 4px;
+            padding: 10px;
+            /* box-shadow: 0 4px 12px rgb(0, 0, 0, 0.3); */
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            min-width: 150px;
+            /* overflow: hidden; */
+            z-index: 100;
+            opacity: 1;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .model-dropdown-menu.hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+        .model-dropdown-menu a {
+            padding: 5px 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        .model-dropdown-menu a:hover {
+            background-color: #3d3f3f;
+        }
+        .model-dropdown-option {
+            background-color: #111212;
+            width: 100%;
+            /* height: 25px; */
+            height: fit-content;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            border: none;
+            font-size: 10pt;
+            color: white;
+        }
+        .setup-container {
+            /* width: 50px; */
+            box-shadow: 0px 5px 12px rgb(157, 153, 153);
+            padding-top: 75px;
+            padding-bottom: 75px;
+            padding: 15px;
+            /* height: 50vh; */
+            /* top: 50%; */
+            /* align-self: center; */
+            /* align-content: center; */
+            /* background-color: ; */
+            background: linear-gradient(
+                #3e3c3c,
+                #635959,
+                #3e3d3d,
+                #312f2f
+            );
+            display: grid;
+            /* justify-content: center; */
+            place-items: center;
+            place-content: center;
+            position: fixed;
+            z-index: 1000;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+            /* border: 5px #fff; */
+            border: 5px outset #0f0e0e;
+            
+        }
+        .setup-container.hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+        .setup-inputs{
+            background-color: #141415;
+            /* width: 80%; */
+            /* height: 75%; */
+            border-radius: 10px;
+            text-align: left;
+            padding-left: 5px;
+            color: white;
+            height: 35px;
+            width: 200px;
+            margin-bottom: 5px;
+            border: 5px double #726f6f;
+        }
+        .setup-text {
+            /* background-color: #075acf; */
+            font-size: 36px;
+            padding-bottom: 20px;
+            padding-top: 10px;
+            margin-left: 25px;
+            margin-right: 25px;
+        }
+        .setup-submit-button {
+            /* background-color: #075acf; */
+            /* width: 25%; */
+            justify-content: center;
+            height: 30px;
+            width: 30px;
+            border-radius: 90px;
+            font-size: 18pt;
+            text-align: center;
+            background: linear-gradient(
+                45deg,
+                #383837,
+                #474549,
+                #6f8a92,
+                #45b7a8,
+                rgb(5, 210, 217),
+                #08d5e8,
+                rgb(5, 210, 217),
+                #45b7a8,
+                #6f8a92,
+                #474549,
+                #383837
+            );
+            background-size: 400% 400%;
+            /* filter: blur(40px); */
+            animation: colorFade 6s ease infinite;
+            transition: transform 0.3s ease, filter 0.3s ease;
+
+        }
+        .setup-submit-button img{
+            width: 70%;
+            height: 70%;
+            /* align-self: center; */
+            /* justify-self: center; */
+            place-self: center;
+            display: grid;
+        }
+
+        
+    </style>
+    </head>
+<body>
+    <div id="setup-container" class="setup-container">
+        <form id="setup-form">
+            <div class="setup-text">Enter Information</div>
+            <input type="text" id="setup-name-input" class="setup-inputs" placeholder="Enter Name" autocomplete="username" required>
+            <input type="password" id="setup-key-input" class="setup-inputs" placeholder="Enter Key" autocomplete="current-password" required>
+            <button id="setup-submit-button" type="submit" class="setup-submit-button"><img src="submitButton.svg" alt="submitButton"></button>
+        </form>
+    </div>
+    <div class="main-container">
+        
+        <div class="chat-container"></div>
+        <div class="input-container">
+            <!-- container -->
+             <div class="model-dropdown-container">
+                <button id="model-dropdown-button">Models ◄</button>
+                <div id="model-dropdown-menu" class="model-dropdown-menu hidden">
+                    <!-- <a href="#">Setting 1</a> -->
+                     <button id="model-main" class="model-dropdown-option">qwen/qwen3.8-27b</button>
+                     <button id="model-second" class="model-dropdown-option">openai/gpt-oss-safeguard-20b</button>
+                </div>
+             </div>
+             <input type="text" id="input-area" class="input-area" placeholder="text">
+            <button id="send-message-button"><img src="sendArrow.svg" alt="send"></button>
+        </div>
+    </div>
+    <script type="module" src="javascript.js"></script>
+</body>
+</html>
